@@ -62,30 +62,62 @@ void PlayState::generateLayersAndTiles(int layers)
 	int maxX = mapTileX - 1;
 	int maxY = mapTileY - 1;
 
-	// Now we loop through them again to give the "heights"
+	bool even = false;
+	int offset = 0;
+
+	// Now we loop through them again to give the "heat"
 	for (row = 1; row < maxY; row++) {
 		for (col = 1; col < maxX; col++) {
 			float diffHeight = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-			if (rand() % 100 >= 50) {
+			if (rand() % 100 >= 50) { // Add or substract
 				diffHeight = 0 - diffHeight;
 			}
 			_tilesMap[row][col]->addHeight(diffHeight);
 
 			diffHeight /= 2;
 
-			// add to ajacent tiles
-			if (col >= 1) {
-				_tilesMap[row][col -1]->addHeight(diffHeight);
+			// On uneven rows, we need to add +1 as offset because of the grid structure
+			even = row % 2 == 0;
+			if (!even) {
+				offset = 1;
 			}
+			else {
+				offset = 0;
+			}
+
+
+			// add to ajacent left tiles
+			if (col >= 1) {
+				// Same row
+				_tilesMap[row][col -1]->addHeight(diffHeight);
+				// Upper row left
+				if (row >= 1) {
+					_tilesMap[row - 1][col - 1 + offset]->addHeight(diffHeight);
+				}
+				// Lower row left
+				if (row < maxY) {
+					_tilesMap[row + 1][col - 1 + offset]->addHeight(diffHeight);
+				}
+			}
+			// Add to the ajacent right tiles
 			if (col < maxX) {
+				// Same row
 				_tilesMap[row][col + 1]->addHeight(diffHeight);
+
+				// Upper row left
+				if (row >= 1) {
+					_tilesMap[row - 1][col + offset]->addHeight(diffHeight);
+				}
+				// Lower row left
+				if (row < maxY) {
+					_tilesMap[row + 1][col + offset]->addHeight(diffHeight);
+				}
 			}
 
 			// If we're an unevent row, we have to add to three above and below
-			if (row % 2 != 0) {
+			/*if (row % 2 != 0) {
 				if (row >= 1) {
 					if (col >= 1) {
-						_tilesMap[row - 1][col - 1]->addHeight(diffHeight);
 					}
 					_tilesMap[row - 1][col ]->addHeight(diffHeight);
 					if (col < maxX) {
@@ -94,7 +126,6 @@ void PlayState::generateLayersAndTiles(int layers)
 				}
 				if (row < maxY) {
 					if (col >= 1) {
-						_tilesMap[row + 1][col - 1]->addHeight(diffHeight);
 					}
 					_tilesMap[row + 1][col]->addHeight(diffHeight);
 					if (col < maxX) {
@@ -116,7 +147,7 @@ void PlayState::generateLayersAndTiles(int layers)
 						_tilesMap[row + 1][col + 1]->addHeight(diffHeight);
 					}
 				}
-			}
+			}*/
 		}
 	}
 

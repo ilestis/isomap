@@ -60,9 +60,8 @@ void Tile::height(float height)
 void Tile::addHeight(float difference)
 {
 	_heat += difference;
-	//printf("[%d][%d]: %f \n", _row, _col, _heat);
-	if (_heat < -0.3f) {
-		_heat = -0.3f;
+	if (_heat < MIN_HEAT) {
+		_heat = MIN_HEAT;
 	}
 }
 
@@ -75,6 +74,11 @@ void Tile::placement(int row, int col)
 {
 	_row = row;
 	_col = col;
+
+	// If we're on the edge of the map, make us lower
+	if (row == 0 || col == 0) {
+		_heat = MIN_HEAT;
+	}
 }
 
 void Tile::addAridity(float difference)

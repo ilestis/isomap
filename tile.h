@@ -2,6 +2,7 @@
 #include <string>
 #include <SDL.h>
 
+
 class Tile
 {
 public:
@@ -36,6 +37,8 @@ private:
 	int _type;
 	float _heat;
 	float _aridity;
+
+	const float MIN_HEAT = -0.5f;
 
 
 	int _overlay;
