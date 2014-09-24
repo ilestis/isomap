@@ -27,6 +27,7 @@ public:
 	static bool renderTexture(SDL_Texture* texture, int xSrc, int ySrc, int xDest, int yDest, int w, int h);
 	static bool renderTexture(SDL_Texture* texture, bool scale);
 	static bool renderTexture(SDL_Texture* texture, SDL_Rect &destRect, SDL_Rect *clip = NULL);
+	static void setScale(float scaleX, float scaleY);
 
 	static bool renderText(const std::string &message, const std::string &fontfile,
 		SDL_Color color, int fontSize, int top, int left);

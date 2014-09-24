@@ -5,11 +5,9 @@ Tile::Tile()
 {
 	_positionX = 0;
 	_positionY = 0;
-	_width = 32;
-	_height = 32;
 	_type = 0;
 	_heat = 0.0f;
-	_aridity = 0.0f;
+	_climate = 0.1f;
 	_overlay = 0;
 
 	_clip = { 0, 0, _width, _height };
@@ -60,7 +58,10 @@ void Tile::height(float height)
 void Tile::addHeight(float difference)
 {
 	_heat += difference;
-	if (_heat < MIN_HEAT) {
+	/*if (_heat > MAX_HEAT) {
+		_heat = MAX_HEAT;
+	}
+	else*/ if (_heat < MIN_HEAT) {
 		_heat = MIN_HEAT;
 	}
 }
@@ -74,21 +75,16 @@ void Tile::placement(int row, int col)
 {
 	_row = row;
 	_col = col;
-
-	// If we're on the edge of the map, make us lower
-	if (row == 0 || col == 0) {
-		_heat = MIN_HEAT;
-	}
 }
 
-void Tile::addAridity(float difference)
+void Tile::addClimate(float difference)
 {
-	_aridity += difference;
+	_climate += difference;
 }
 
-float Tile::aridity()
+float Tile::climate()
 {
-	return _aridity;
+	return _climate;
 }
 
 void Tile::overlay(int overlay) {

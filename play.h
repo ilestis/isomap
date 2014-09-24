@@ -9,8 +9,13 @@
 #include "renderer.h"
 #include <list>
 #include <vector>
-const int mapTileX = 21;
-const int mapTileY = 21;
+#include <sstream>
+const int mapTileX = 41;
+const int mapTileY = 41;
+const float MAP_MOUNTAIN_HEIGHT = 10.5f;
+const float MAP_PLAIN_HEIGHT = 6.3f;
+const float MAP_FOREST_THRESHOLD = 0.5f;
+const float MAP_DESERT_THRESHOLD = -0.5f;
 
 class PlayState : public GameState
 {
@@ -46,10 +51,17 @@ private:
 
 	// Lists
 	//std::vector<Tile*> _tiles;
-	Tile * _tilesMap[mapTileX][mapTileY];
+	Tile * _tilesMap[mapTileY+1][mapTileX+1];
+
+
+	std::stringstream _ssGuiElement;
 
 	Camera _camera;
 	int _tileWidth;
 	int _tileHeight;
+
+	// Current mouse coordinates
+	int _currentXCoordinate, _currentYCoordinate;
+	bool _requireUpdate;
 };
 #endif

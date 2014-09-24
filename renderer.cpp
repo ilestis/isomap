@@ -212,6 +212,7 @@ bool Renderer::renderText(const std::string &message, const std::string &font, S
 
 	// Close
 	SDL_FreeSurface(surface);
+	SDL_DestroyTexture(texture);
 	TTF_CloseFont(ttffont);
 	return true;
 }
@@ -221,4 +222,9 @@ bool Renderer::renderCollider(SDL_Rect collider, int color) {
 	SDL_RenderDrawRect(Renderer::g_renderer, &collider);
 	SDL_SetRenderDrawColor(Renderer::g_renderer, 0, 0, 0, 0);
 	return true;
+}
+
+void Renderer::setScale(float scaleX, float scaleY)
+{
+	SDL_RenderSetScale(Renderer::g_renderer, scaleX, scaleY);
 }

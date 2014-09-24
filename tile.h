@@ -14,7 +14,7 @@ public:
 	SDL_Rect clip();
 	SDL_Rect overlayClip();
 	float height();
-	float aridity();
+	float climate();
 	bool hasOverlay();
 
 	// Setters
@@ -24,7 +24,7 @@ public:
 	void type(int type);
 	void height(float height);
 	void addHeight(float difference);
-	void addAridity(float difference);
+	void addClimate(float difference);
 	void overlay(int overlay);
 
 
@@ -36,9 +36,10 @@ private:
 	SDL_Rect _clip;
 	int _type;
 	float _heat;
-	float _aridity;
+	float _climate; // negative = arid, positif = wet
 
-	const float MIN_HEAT = -0.5f;
+	const float MIN_HEAT = 0.0f;
+	const float MAX_HEAT = 50.0f;
 
 
 	int _overlay;
